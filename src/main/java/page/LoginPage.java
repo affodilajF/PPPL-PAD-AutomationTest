@@ -10,17 +10,16 @@ public class LoginPage {
     LoginObject loginObject;
     public LoginPage(WebDriver driver) {
         this.driver = driver;
-//        loginObject = new LoginObject(driver);
+        loginObject = new LoginObject(driver);
     }
 
     public void clickSubmit() {
-        driver.findElement(By.xpath("//button[@type='submit']")).click();
+        driver.findElement(loginObject.getSubmitButton()).click();
     }
 
 
     public String getURL() {
         return driver.getCurrentUrl();
     }
-//
 
 }

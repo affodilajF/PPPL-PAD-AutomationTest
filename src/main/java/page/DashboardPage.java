@@ -2,6 +2,7 @@ package page;
 
 import object.DashboardObject;
 import org.junit.Assert;
+import object.LoginObject;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -22,6 +23,7 @@ public class DashboardPage {
     DashboardObject dashboardObject;
     public DashboardPage(WebDriver driver) {
         this.driver = driver;
+        dashboardObject = new DashboardObject(driver);
     }
 
     By avatarMenu = By.xpath("//img[@id='avatar-menu']");
@@ -31,25 +33,24 @@ public class DashboardPage {
     By chart = By.tagName("canvas");
     By filterBtn = By.xpath("//button[text()='Q1']");
 
-
     public void checkAvatar() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement avatar = wait.until(ExpectedConditions.visibilityOfElementLocated(avatarMenu));
+        WebElement avatar = wait.until(ExpectedConditions.visibilityOfElementLocated(dashboardObject.getAvatarMenu()));
         assertNotNull(avatar);
     }
 
     public void clickAvatar(){
-        driver.findElement(avatarMenu).click();
+        driver.findElement(dashboardObject.getAvatarMenu()).click();
     }
 
     public void getTooltip(){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        WebElement tooltip = wait.until(ExpectedConditions.visibilityOfElementLocated(toolTip));
+        WebElement tooltip = wait.until(ExpectedConditions.visibilityOfElementLocated(dashboardObject.getToolTip()));
         assertNotNull(tooltip);
     }
 
     public void clickLogout(){
-        driver.findElement(logoutBtn).click();
+        driver.findElement(dashboardObject.getLogoutButton()).click();
     }
 
     public void clickNavBtn(){
@@ -115,7 +116,6 @@ public class DashboardPage {
     public void clickFilter(){
         driver.findElement(filterBtn).click();
     }
-
 
     public String getURL() {
         return driver.getCurrentUrl();
