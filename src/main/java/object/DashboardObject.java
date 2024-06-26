@@ -15,9 +15,20 @@ public class DashboardObject {
         return By.xpath("//*[contains(text(), 'Congratulations')]");
     }
 
-    public By getBtnLogout(){
-        return By.xpath("//*[contains(text(), 'Log out')]");
+//    public By getBtnLogout(){
+//        return By.xpath("//*[contains(text(), 'Log out')]");
+//    }
+
+    public By getLogoutButton(){
+        return By.xpath("//button[text()='Logout']");
     }
 
+    public By getAvatarMenu(){
+        return By.xpath("//img[@id='avatar-menu']");
+    }
+
+    public By getToolTip(){
+        return By.xpath("//div[@role='tooltip']");
+    }
 }
 
