@@ -1,5 +1,6 @@
 package stepDefinitions;
 
+import hooks.Hooks;
 import io.cucumber.java.After;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -18,11 +19,16 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class LoginSteps {
     private WebDriver driver;
-    LoginPage login;
+    LoginPage loginPage;
     DashboardPage dashboardPage;
 
     void setupDriver() {
+        //driver = Hooks.getDriver();
         driver = WebDriverManager.getDriver();
+        loginPage = new LoginPage(driver);
+        dashboardPage = new DashboardPage(driver);
+
+        System.out.println(Hooks.getDriver());
     }
 
     @Given("User in the admin login page")
@@ -33,15 +39,12 @@ public class LoginSteps {
     }
     @When("user submit valid credentials")
     public void user_submit_valid_credentials() {
-        login = new LoginPage(driver);
-        login.clickSubmit();
-
+        loginPage.clickSubmit();
     }
 
     @Then("the user is redirected to the dashboard page")
     public void the_user_is_redirected_to_the_dashboard_page() {
         String expectedURL = "http://localhost:5173/manage";
-        DashboardPage dashboardPage = new DashboardPage(driver);
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.urlToBe(expectedURL));

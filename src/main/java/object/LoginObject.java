@@ -10,5 +10,8 @@ public class LoginObject {
         this.driver = driver;
     }
 
+    public By getSubmitButton(){
+        return By.xpath("//button[@type='submit']");
+    }
 
 }
