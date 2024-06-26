@@ -10,20 +10,19 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import page.DashboardPage;
 import page.LoginPage;
+import utils.WebDriverManager;
 
 import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class LoginSteps {
-    WebDriver driver;
+    private WebDriver driver;
     LoginPage login;
     DashboardPage dashboardPage;
 
     void setupDriver() {
-        driver = new FirefoxDriver();
-        driver.manage().window().maximize();
+        driver = WebDriverManager.getDriver();
     }
 
     @Given("User in the admin login page")
@@ -36,16 +35,9 @@ public class LoginSteps {
     public void user_submit_valid_credentials() {
         login = new LoginPage(driver);
         login.clickSubmit();
+
     }
 
-//    @Then("the user is redirected to the dashboard page")
-//    public void the_user_is_redirected_to_the_dashboard_page() {
-//        String expectedURL = "http://localhost:5173/manage";
-//        dashboardPage = new DashboardPage(driver);
-//        String actualURL = dashboardPage.getURL();
-//
-//        assertEquals(expectedURL, actualURL);
-//    }
     @Then("the user is redirected to the dashboard page")
     public void the_user_is_redirected_to_the_dashboard_page() {
         String expectedURL = "http://localhost:5173/manage";
@@ -55,12 +47,11 @@ public class LoginSteps {
         wait.until(ExpectedConditions.urlToBe(expectedURL));
 
         String actualURL = dashboardPage.getURL();
-
         assertEquals(expectedURL, actualURL);
     }
 //
-    @After
-    public void closeBrowser() {
-            driver.quit();
-    }
+//    @After
+//    public void closeBrowser() {
+//            driver.quit();
+//    }
 }
