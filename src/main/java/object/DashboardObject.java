@@ -15,10 +15,6 @@ public class DashboardObject {
         return By.xpath("//*[contains(text(), 'Congratulations')]");
     }
 
-//    public By getBtnLogout(){
-//        return By.xpath("//*[contains(text(), 'Log out')]");
-//    }
-
     public By getLogoutButton(){
         return By.xpath("//button[text()='Logout']");
     }

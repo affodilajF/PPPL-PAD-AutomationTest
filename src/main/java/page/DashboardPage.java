@@ -22,17 +22,8 @@ public class DashboardPage {
         dashboardObject = new DashboardObject(driver);
     }
 
-//    By avatarMenu = By.xpath("//img[@id='avatar-menu']");
-//    By toolTip = By.xpath("//div[@role='tooltip']");
-//    By logoutBtn = By.xpath("//button[text()='Logout']");
-//    By reportNavBtn = By.xpath("//a[@href='/manage/reports']");
-
-
-
-
     public void checkAvatar() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-//        WebElement avatar = wait.until(ExpectedConditions.visibilityOfElementLocated(avatarMenu));
         WebElement avatar = wait.until(ExpectedConditions.visibilityOfElementLocated(dashboardObject.getAvatarMenu()));
         assertNotNull(avatar);
     }
@@ -48,7 +39,6 @@ public class DashboardPage {
     }
 
     public void clickLogout(){
-//        driver.findElement(logoutBtn).click();
         driver.findElement(dashboardObject.getLogoutButton()).click();
     }
 
