@@ -12,7 +12,7 @@ public class WebDriverManager {
     public static WebDriver getDriver() {
         if (driver == null) {
             driver = new FirefoxDriver();;
-            driver.manage().window().maximize();
+            driver.manage().window();
         }
         return driver;
     }

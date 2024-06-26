@@ -52,9 +52,9 @@ public class LoginSteps {
         String actualURL = dashboardPage.getURL();
         assertEquals(expectedURL, actualURL);
     }
-//
-//    @After
-//    public void closeBrowser() {
-//            driver.quit();
-//    }
+
+    @After
+    public void closeBrowser() {
+            WebDriverManager.quitDriver();
+    }
 }
