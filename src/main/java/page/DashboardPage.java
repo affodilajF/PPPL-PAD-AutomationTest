@@ -26,12 +26,26 @@ public class DashboardPage {
         dashboardObject = new DashboardObject(driver);
     }
 
-    By avatarMenu = By.xpath("//img[@id='avatar-menu']");
-    By toolTip = By.xpath("//div[@role='tooltip']");
-    By logoutBtn = By.xpath("//button[text()='Logout']");
     By reportNavBtn = By.xpath("//a[@href='/manage/reports']");
     By chart = By.tagName("canvas");
     By filterBtn = By.xpath("//button[text()='Q1']");
+    By tableSectorBtn = By.xpath("/html/body/div/div[1]/div/main/div/div/div[6]/div[1]/div/button[2]");
+    By sectorTable = By.xpath("/html/body/div/div[1]/div/main/div/div/div[6]/div[2]/div[2]/div/table");
+    By addDataTable = By.xpath("/html/body/div/div[1]/div/main/div/div/div[6]/div[2]/div[1]/div[2]/button");
+    By formSectorTable = By.xpath("/html/body/div/div[1]/div/main/div/div[3]/div/div/div[2]");
+    By inputBusinessType = By.xpath("//input[@id='business_type_id']");
+    By inputYear = By.xpath("//input[@id='year']");
+    By inputMonth = By.xpath("//input[@id='month']");
+    By inputDebtor = By.xpath("//input[@id='debtor']");
+    By inputContractValue = By.xpath("//input[@id='contract_value']");
+    By inputOutstandingValue = By.xpath("//input[@id='outstanding_value']");
+    By inputTarget = By.xpath("//input[@id='target']");
+    By inputRealization = By.xpath("//input[@id='realization']");
+    By submitBtn = By.xpath("/html/body/div/div[1]/div/main/div/div[3]/div/div/div[2]/form/div/div[9]/button[1]");
+    By alert = By.xpath("//div[@role='alert']");
+
+
+
 
     public void checkAvatar() {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
@@ -56,31 +70,21 @@ public class DashboardPage {
     public void clickNavBtn(){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
 
-        // Tunggu hingga elemen ada di DOM
+
         WebElement report_btn = wait.until(ExpectedConditions.presenceOfElementLocated(reportNavBtn));
-
-        // Coba scroll ke elemen menggunakan JavaScript
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView(true);", report_btn);
-
-        // Tunggu sebentar setelah scroll
         try {
             Thread.sleep(1000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-
-        // Tunggu hingga elemen dapat diklik
         wait.until(ExpectedConditions.elementToBeClickable(reportNavBtn));
 
-        // Coba klik menggunakan JavaScript
         try {
             ((JavascriptExecutor) driver).executeScript("arguments[0].click();", report_btn);
         } catch (Exception e) {
-            // Jika JavaScript click gagal, coba menggunakan Actions
             new Actions(driver).moveToElement(report_btn).click().perform();
         }
-
-        // Verifikasi bahwa klik berhasil (misalnya dengan memeriksa URL baru)
         wait.until(ExpectedConditions.urlContains("/manage/reports"));
     }
 
@@ -93,10 +97,9 @@ public class DashboardPage {
     public void checkAllCharts(){
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
 
-        // Tunggu sampai setidaknya satu grafik muncul
+
         wait.until(ExpectedConditions.presenceOfElementLocated(chart));
 
-        // Tunggu sampai semua grafik terlihat
         wait.until(driver -> {
             List<WebElement> charts = driver.findElements(chart);
             return charts.size() == 6 && charts.stream().allMatch(WebElement::isDisplayed);
@@ -107,7 +110,7 @@ public class DashboardPage {
         int expectedCount = 6;
         Assert.assertEquals("Jumlah grafik tidak sesuai yang diharapkan", expectedCount, count);
 
-        // Verifikasi bahwa semua grafik terlihat
+
         for (WebElement chartElement : charts) {
             assertTrue("Grafik tidak terlihat", chartElement.isDisplayed());
         }
@@ -115,6 +118,57 @@ public class DashboardPage {
 
     public void clickFilter(){
         driver.findElement(filterBtn).click();
+    }
+
+    public void clickTableSection(){
+        driver.findElement(tableSectorBtn).click();
+    }
+
+    public void checkSectorTable(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+
+        wait.until(ExpectedConditions.presenceOfElementLocated(sectorTable));
+        WebElement table = driver.findElement(sectorTable);
+        assertNotNull(table);
+    }
+
+    public void clickAddTableData(){
+        driver.findElement(addDataTable).click();
+    }
+
+    public void checkFormPresence(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+        wait.until(ExpectedConditions.presenceOfElementLocated(formSectorTable));
+        WebElement form = driver.findElement(formSectorTable);
+        assertNotNull(form);
+    }
+
+    public void inputFormSector(){
+        driver.findElement(inputBusinessType).sendKeys("ALG86qepwdlBr3X");
+        driver.findElement(inputYear).sendKeys("2024");
+        driver.findElement(inputMonth).sendKeys("06");
+        driver.findElement(inputDebtor).clear();
+        driver.findElement(inputDebtor).sendKeys("12");
+        driver.findElement(inputContractValue).clear();
+        driver.findElement(inputContractValue).sendKeys("12");
+        driver.findElement(inputOutstandingValue).clear();
+        driver.findElement(inputOutstandingValue).sendKeys("12");
+        driver.findElement(inputTarget).clear();
+        driver.findElement(inputTarget).sendKeys("12");
+        driver.findElement(inputRealization).clear();
+        driver.findElement(inputRealization).sendKeys("12");
+    }
+
+    public void submitForm(){
+        driver.findElement(submitBtn).click();
+    }
+
+    public void checkAlert(){
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(60));
+
+        wait.until(ExpectedConditions.presenceOfElementLocated(alert));
+        WebElement alertElement = driver.findElement(alert);
+        assertNotNull(alertElement);
     }
 
     public String getURL() {
